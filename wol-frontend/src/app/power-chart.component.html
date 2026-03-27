@@ -1,0 +1,19 @@
+<div class="chart-container">
+  <div class="chart-header">
+    <h3>Historial de Encendidos Hoy</h3>
+    <span class="total-badge">{{ totalPowerOns }} veces</span>
+  </div>
+  
+  <div class="chart-area">
+    @for (data of chartData; track data.time) {
+      <div class="bar-group">
+        <div class="bar-track">
+          <div class="bar-fill" [style.height]="data.height">
+            <div class="tooltip">{{ data.count }}</div>
+          </div>
+        </div>
+        <span class="bar-label">{{ data.time }}</span>
+      </div>
+    }
+  </div>
+</div>

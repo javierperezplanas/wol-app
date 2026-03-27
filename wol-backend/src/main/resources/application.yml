@@ -1,0 +1,6 @@
+wol:
+  host: "javipc-home.mooo.com"
+
+quarkus:
+  http:
+    cors: true

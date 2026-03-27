@@ -1,0 +1,24 @@
+services:
+  # MOTOR BACKEND (Quarkus)
+  backend:
+    image: openjdk:21-slim
+    container_name: wol-backend
+    volumes:
+      - ./wol-backend:/app
+    working_dir: /app
+    command: "./mvnw package -Dquarkus.package.type=quarkus-app && java -jar target/quarkus-app/quarkus-run.jar"
+    ports:
+      - "8080:8080"
+    restart: always
+
+  # FRONTAL WEB (Nginx + Angular)
+  frontend:
+    image: node:22-slim
+    container_name: wol-frontend
+    volumes:
+      - ./wol-frontend:/app
+    working_dir: /app
+    command: "sh -c 'npm install && npm run build && tail -f /dev/null'" # Aquí lo ideal sería usar una imagen de Nginx pura tras el build
+    ports:
+      - "80:4200"
+    restart: always

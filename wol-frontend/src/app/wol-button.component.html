@@ -1,0 +1,29 @@
+<div class="wol-container">
+  <button 
+    class="wol-button" 
+    [ngClass]="state()" 
+    (click)="wakePc()"
+    [disabled]="state() === 'loading'"
+  >
+    @if (state() === 'idle') {
+      <span class="icon">⚡</span>
+      <span>Despertar PC</span>
+    }
+    @else if (state() === 'loading') {
+      <span class="spinner"></span>
+      <span>Enviando...</span>
+    }
+    @else if (state() === 'success') {
+      <span class="icon">✅</span>
+      <span>¡Señal Enviada!</span>
+    }
+    @else if (state() === 'error') {
+      <span class="icon">❌</span>
+      <span>Error al enviar</span>
+    }
+  </button>
+  
+  @if (state() === 'error') {
+    <div class="error-msg">{{ errorMessage() }}</div>
+  }
+</div>

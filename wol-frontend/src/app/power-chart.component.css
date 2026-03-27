@@ -1,0 +1,108 @@
+.chart-container {
+  background: #1e1e2e;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  color: #cdd6f4;
+  font-family: 'Inter', system-ui, sans-serif;
+  max-width: 500px;
+  width: 100%;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.chart-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.total-badge {
+  background: #cba6f7;
+  color: #11111b;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.chart-area {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 200px;
+  gap: 12px;
+}
+
+.bar-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.bar-track {
+  width: 100%;
+  max-width: 40px;
+  height: 160px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: visible;
+}
+
+.bar-fill {
+  width: 100%;
+  background: linear-gradient(180deg, #89b4fa 0%, #b4befe 100%);
+  border-radius: 8px;
+  position: relative;
+  transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: height;
+  cursor: pointer;
+  animation: growUp 0.8s ease-out forwards;
+}
+
+@keyframes growUp {
+  0% { height: 0; }
+}
+
+.bar-fill:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 15px rgba(137, 180, 250, 0.4);
+}
+
+.tooltip {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #313244;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  font-weight: bold;
+}
+
+.bar-fill:hover .tooltip {
+  opacity: 1;
+}
+
+.bar-label {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: #a6adc8;
+  font-weight: 500;
+}

@@ -1,0 +1,13 @@
+# Java / Quarkus
+**/target/
+**/.quarkus/
+**/.idea/
+**/*.iml
+
+# Node / Angular
+**/node_modules/
+**/dist/
+**/.angular/
+
+# Docker
+.env
