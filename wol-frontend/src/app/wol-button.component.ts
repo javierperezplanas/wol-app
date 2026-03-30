@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WolService } from './wol.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type ButtonState = 'idle' | 'loading' | 'success' | 'error';
 
@@ -30,10 +31,18 @@ export class WolButtonComponent {
         this.state.set('success');
         setTimeout(() => this.state.set('idle'), 3000);
       },
-      error: (err) => {
+      error: (err: HttpErrorResponse) => {
         this.state.set('error');
-        this.errorMessage.set(err.message || 'Error al conectar con Quarkus');
-        setTimeout(() => this.state.set('idle'), 4000);
+        
+        let msg = 'Error al enviar la petición';
+        if (err.error && err.error.error) {
+           msg = 'Error de envío: ' + err.error.error;
+        } else if (err.message) {
+           msg = err.message;
+        }
+        
+        this.errorMessage.set(msg);
+        setTimeout(() => this.state.set('idle'), 5000);
       }
     });
   }

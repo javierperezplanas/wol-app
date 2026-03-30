@@ -4,3 +4,11 @@ wol:
 quarkus:
   http:
     cors: true
+  mailer:
+    mock: false
+    from: "viercadaver@gmail.com"
+    host: "smtp.gmail.com"
+    port: 587
+    start-tls: "REQUIRED"
+    username: "viercadaver@gmail.com"
+    password: "hvrevarkasvnngkv"

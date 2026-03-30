@@ -6,12 +6,18 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.Arrays;
+import io.quarkus.mailer.Mail;
+import io.quarkus.mailer.Mailer;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class WolService {
 
     @ConfigProperty(name = "wol.host")
     String targetHost; // Sacado de application.yaml
+
+    @Inject
+    Mailer mailer;
 
     public void sendMagicPacket(String mac) throws Exception {
         byte[] macBytes = parseMac(mac);
@@ -27,15 +33,22 @@ public class WolService {
             DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, 9);
             socket.send(packet);
         }
+
+        // Enviar email de notificación. Si falla, lanzará una excepción que será capturada por el WolResource
+        // y devolverá un error 500 al frontend.
+        mailer.send(Mail.withText("viercadaver@gmail.com", "test", "Se ha enviado el magic packet para despertar el PC de Javi con MAC: (" + mac + ")."));
     }
 
     public PingResult checkStatus() {
         try {
             long start = System.currentTimeMillis();
-            boolean online = InetAddress.getByName(targetHost).isReachable(2000);
+            // Utilizar el comando ping del sistema porque isReachable en Linux requiere root para usar ICMP.
+            ProcessBuilder pb = new ProcessBuilder("ping", "-c", "1", "-W", "2", targetHost);
+            Process process = pb.start();
+            boolean online = process.waitFor() == 0;
             long latencyMs = online ? (System.currentTimeMillis() - start) : -1;
             return new PingResult(online, latencyMs);
-        } catch (java.io.IOException e) {
+        } catch (Exception e) {
             return new PingResult(false, -1);
         }
     }
