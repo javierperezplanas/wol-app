@@ -12,3 +12,5 @@ quarkus:
     start-tls: "REQUIRED"
     username: "viercadaver@gmail.com"
     password: "hvrevarkasvnngkv"
+    timeout: "240S"
+    keep-alive: false

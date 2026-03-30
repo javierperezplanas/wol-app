@@ -84,6 +84,10 @@ FROM registry.access.redhat.com/ubi8/openjdk-21:1.23
 
 ENV LANGUAGE='en_US:en'
 
+# --- AÑADE ESTO PARA EL PING ---
+USER root
+RUN microdnf install iputils && microdnf clean all
+# ---------------
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
